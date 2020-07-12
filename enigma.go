@@ -1,38 +1,53 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"log"
 	"os"
 	"strings"
 
+	"enigma/constant"
 	"enigma/roter"
-	"enigma/util"
 )
 
 func main() {
-	//initialize roters randomly
-	line1 := make([]int, 0, len(util.RoterSeedMap))
-	line2 := make([]int, 0, len(util.RoterSeedMap))
-	line3 := make([]int, 0, len(util.RoterSeedMap))
-	for _, element := range util.RoterSeedMap {
-		line1 = append(line1, element)
+	//choose mode
+	var (
+		kek           bool
+		input         string
+		roter_setting string
+	)
+	flag.BoolVar(&kek, "kek", false, "Key encrypting key(repeat twice).")
+	flag.StringVar(&input, "input", "", "Type string to encrypt/decrypt.")
+	flag.StringVar(&roter_setting, "setting", "", "Setting of roters.")
+	flag.Parse()
+	if input == "" {
+		log.Fatal("No string to encrypt/decrypt")
+	} else if kek {
+		if len(input) != 6 {
+			log.Fatal("Kek must be repetition of three letters(six letters)")
+		}
+	} else {
+		if roter_setting == "" {
+			log.Fatal("Specify the setting of roters")
+		} else if len(roter_setting) != 3 {
+			log.Fatal("Setting must be three letters")
+		}
 	}
-	for _, element := range util.RoterSeedMap {
-		line2 = append(line2, element)
-	}
-	for _, element := range util.RoterSeedMap {
-		line3 = append(line3, element)
-	}
-	//show lines of roters
-	/*log.Println("line1: ", line1)
-	log.Println("line2: ", line2)
-	log.Println("line3: ", line3)*/
-	roter1 := roter.Initialize(line1)
-	roter2 := roter.Initialize(line2)
-	roter3 := roter.Initialize(line3)
 
-	if len(os.Args) != 2 {
+	//initialize roters
+	roter1 := roter.Initialize(constant.RoterPattern1)
+	roter2 := roter.Initialize(constant.RoterPattern2)
+	roter3 := roter.Initialize(constant.RoterPattern3)
+
+	//change the setting of the roters
+	if !kek {
+		setting_letters := strings.Split(roter_setting, "")
+		fmt.Println(setting_letters)
+	}
+
+	if len(os.Args) < 2 {
 		log.Fatal("Invalid args")
 	}
 	input_strs := strings.Split(os.Args[1], "")
@@ -41,11 +56,11 @@ func main() {
 	for _, char := range input_strs {
 
 		//get encrypted char
-		char_num := util.StringConvertMap[char]
+		char_num := constant.StringConvertMap[char]
 		encrypted_num := roter3.Values[roter2.Values[roter1.Values[char_num]]]
 
 		//apply a reflector
-		reflected_encrypted_num := roter.Reflector[encrypted_num]
+		reflected_encrypted_num := constant.Reflector[encrypted_num]
 
 		//encrypt backwards
 		for index, value := range roter3.Values {
@@ -69,7 +84,7 @@ func main() {
 
 		//get char
 		encrypted_char := ""
-		for key, value := range util.StringConvertMap {
+		for key, value := range constant.StringConvertMap {
 			if value == reflected_encrypted_num {
 				encrypted_char = key
 				break

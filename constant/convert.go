@@ -1,4 +1,4 @@
-package util
+package constant
 
 var (
 	StringConvertMap = map[string]int{
