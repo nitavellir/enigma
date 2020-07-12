@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"os"
 	"strings"
 
 	"enigma/constant"
@@ -44,13 +43,21 @@ func main() {
 	//change the setting of the roters
 	if !kek {
 		setting_letters := strings.Split(roter_setting, "")
-		fmt.Println(setting_letters)
+
+		//roter1
+		repeat_count := constant.StringConvertMap[setting_letters[0]]
+		roter1.RepeatRotation(repeat_count)
+
+		//roter2
+		repeat_count = constant.StringConvertMap[setting_letters[1]]
+		roter2.RepeatRotation(repeat_count)
+
+		//roter3
+		repeat_count = constant.StringConvertMap[setting_letters[2]]
+		roter3.RepeatRotation(repeat_count)
 	}
 
-	if len(os.Args) < 2 {
-		log.Fatal("Invalid args")
-	}
-	input_strs := strings.Split(os.Args[1], "")
+	input_strs := strings.Split(input, "")
 
 	output_str := ""
 	for _, char := range input_strs {
