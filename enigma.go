@@ -11,9 +11,26 @@ import (
 )
 
 func main() {
-	roter1 := roter.Initialize([]int{3, 2, 0, 1})
-	roter2 := roter.Initialize([]int{1, 3, 2, 0})
-	roter3 := roter.Initialize([]int{3, 1, 0, 2})
+	//initialize roters randomly
+	line1 := make([]int, 0, len(util.RoterSeedMap))
+	line2 := make([]int, 0, len(util.RoterSeedMap))
+	line3 := make([]int, 0, len(util.RoterSeedMap))
+	for _, element := range util.RoterSeedMap {
+		line1 = append(line1, element)
+	}
+	for _, element := range util.RoterSeedMap {
+		line2 = append(line1, element)
+	}
+	for _, element := range util.RoterSeedMap {
+		line3 = append(line1, element)
+	}
+	//show lines of roters
+	log.Println("line1: ", line1)
+	log.Println("line2: ", line2)
+	log.Println("line3: ", line3)
+	roter1 := roter.Initialize(line1)
+	roter2 := roter.Initialize(line2)
+	roter3 := roter.Initialize(line3)
 
 	if len(os.Args) != 2 {
 		log.Fatal("Invalid args")

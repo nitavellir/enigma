@@ -12,7 +12,7 @@ type Roter struct {
 }
 
 func (r *Roter) Plus() {
-	if r.Offset >= 0 && r.Offset < 3 {
+	if r.Offset >= 0 && r.Offset < 25 {
 		//update offset
 		r.Offset += 1
 
@@ -28,7 +28,7 @@ func (r *Roter) Plus() {
 
 		//update one round flag
 		r.IsOneRound = false
-	} else if r.Offset == 3 {
+	} else if r.Offset == 25 {
 		//update offset
 		r.Offset = 0
 
