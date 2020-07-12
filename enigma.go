@@ -25,9 +25,9 @@ func main() {
 		line3 = append(line1, element)
 	}
 	//show lines of roters
-	log.Println("line1: ", line1)
+	/*log.Println("line1: ", line1)
 	log.Println("line2: ", line2)
-	log.Println("line3: ", line3)
+	log.Println("line3: ", line3)*/
 	roter1 := roter.Initialize(line1)
 	roter2 := roter.Initialize(line2)
 	roter3 := roter.Initialize(line3)
