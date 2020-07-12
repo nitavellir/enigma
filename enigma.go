@@ -19,10 +19,10 @@ func main() {
 		line1 = append(line1, element)
 	}
 	for _, element := range util.RoterSeedMap {
-		line2 = append(line1, element)
+		line2 = append(line2, element)
 	}
 	for _, element := range util.RoterSeedMap {
-		line3 = append(line1, element)
+		line3 = append(line3, element)
 	}
 	//show lines of roters
 	/*log.Println("line1: ", line1)
